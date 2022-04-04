@@ -51,11 +51,11 @@ public class UI {
     static void Reading_all_files(FileM Admins_file, FileM Books_file, FileM Issued_books_file, FileM Librarians_file, FileM Students_file) {
         // this function opens all files simultaneously and used the method "read", in the FileM class
         // read also finds the numbe rof columns and rows and stores it in the attributes of FileM objects
-        Admins_file.Read("src\\Admins.csv");
-        Books_file.Read("src\\Books.csv");
-        Issued_books_file.Read("src\\Issued Books.csv");
-        Librarians_file.Read("src\\Librarians.csv");
-        Students_file.Read("src\\Students.csv");
+        Admins_file.Read("Data\\Admins.csv");
+        Books_file.Read("Data\\Books.csv");
+        Issued_books_file.Read("Data\\Issued Books.csv");
+        Librarians_file.Read("Data\\Librarians.csv");
+        Students_file.Read("Data\\Students.csv");
     }
     static void creating_objects(FileM Admins_file, FileM Books_file, FileM Issued_books_file, FileM Librarians_file, FileM Students_file,ArrayList<Admins>Admins_objects,ArrayList<Books> Books_objects,ArrayList<Issued_Books> Issued_books_objects,ArrayList<Librarians> Librarians_objects,ArrayList<Students> Students_objects     )
     {
