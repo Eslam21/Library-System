@@ -2,7 +2,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class App2 {
+public class UI {
     public static void main(String[] args) throws Exception {
         /* Creating FileM objects for each file,
         those objects are used to read, write and hold the data in the csv file in a string array
