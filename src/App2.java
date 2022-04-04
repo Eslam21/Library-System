@@ -1,19 +1,63 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class UI_Fuctions {
+public class App2 {
+    public static void main(String[] args) throws Exception {
+        /* Creating FileM objects for each file,
+        those objects are used to read, write and hold the data in the csv file in a string array
+         */
+        FileM Admins_file = new FileM();
+        FileM Books_file = new FileM();
+        FileM Issued_books_file = new FileM();
+        FileM Librarians_file = new FileM();
+        FileM Students_file = new FileM();
 
+        // Opening all the csv files and storing all data in an array of strings
+        Reading_all_files(Admins_file, Books_file, Issued_books_file, Librarians_file, Students_file);
+
+        // Creating arraylists of all our classes, to create an array of objects
+        ArrayList<Admins> Admins_objects = new ArrayList<Admins>();
+        ArrayList<Books> Books_objects = new ArrayList<Books>();
+        ArrayList<Issued_Books> Issued_books_objects = new ArrayList<Issued_Books>();
+        ArrayList<Librarians> Librarians_objects = new ArrayList<Librarians>();
+        ArrayList<Students> Students_objects = new ArrayList<Students>();
+
+        // fill the objects, this function changes the array of strings, to  array of objects, this is to make it easier to edit and delete
+        // afterwards we will be working on the array of objects
+        creating_objects(Admins_file, Books_file, Issued_books_file, Librarians_file, Students_file, Admins_objects, Books_objects,Issued_books_objects,Librarians_objects,Students_objects);
+
+        // starting the interface, make the user choose whether he is admin or librarian
+        // then will start to ask for ID and checks the password
+        // which interface variable is used to let us know afterwords which interface to open, admin or librarian
+        int which_interface = login(Admins_file, Librarians_file);
+
+        //this "if" statement is to diverge the code into the two possible interfaces
+        // admin or librarian
+        if(which_interface == 1 )
+        {
+            // this function contains the admin interface along with all the functions an admin can do
+            Admin_view(Admins_file, Books_file, Issued_books_file, Librarians_file, Students_file, Admins_objects, Books_objects,Issued_books_objects,Librarians_objects,Students_objects );
+        }
+        else
+        {
+            // this function contains the interface of the librarian and all the functions a librarian can do
+            librarian_view(Admins_file, Books_file, Issued_books_file, Librarians_file, Students_file, Admins_objects, Books_objects,Issued_books_objects,Librarians_objects,Students_objects );
+        }
+
+
+    }
 
     static void Reading_all_files(FileM Admins_file, FileM Books_file, FileM Issued_books_file, FileM Librarians_file, FileM Students_file) {
         // this function opens all files simultaneously and used the method "read", in the FileM class
         // read also finds the numbe rof columns and rows and stores it in the attributes of FileM objects
-        Admins_file.Read("Data\\Admins.csv");
-        Books_file.Read("Data\\Books.csv");
-        Issued_books_file.Read("Data\\Issued Books.csv");
-        Librarians_file.Read("Data\\Librarians.csv");
-        Students_file.Read("Data\\Students.csv");
+        Admins_file.Read("src\\Admins.csv");
+        Books_file.Read("src\\Books.csv");
+        Issued_books_file.Read("src\\Issued Books.csv");
+        Librarians_file.Read("src\\Librarians.csv");
+        Students_file.Read("src\\Students.csv");
     }
-    static void creating_objects(FileM Admins_file, FileM Books_file, FileM Issued_books_file, FileM Librarians_file, FileM Students_file,ArrayList<Admins>Admins_objects,ArrayList<Books> Books_objects,ArrayList<Issued_Books> Issued_books_objects,ArrayList<Librarians> Librarians_objects,ArrayList<Students> Students_objects)
+    static void creating_objects(FileM Admins_file, FileM Books_file, FileM Issued_books_file, FileM Librarians_file, FileM Students_file,ArrayList<Admins>Admins_objects,ArrayList<Books> Books_objects,ArrayList<Issued_Books> Issued_books_objects,ArrayList<Librarians> Librarians_objects,ArrayList<Students> Students_objects     )
     {
         // this function converts the array of strings to array of objects
         /*
@@ -51,7 +95,7 @@ public class UI_Fuctions {
 
     static int login(FileM Admins_file,FileM Librarians_file){
         // interface
-        System.out.println("===================================== Welcome to the library system =====================================");
+        System.out.println("=====================================Welcome to the library system");
         System.out.println("Please choose which user you are:");
         System.out.println("1. Admin");
         System.out.println("2. Librarian");
@@ -135,14 +179,14 @@ public class UI_Fuctions {
         System.out.println("1. Add student");
         System.out.println("2. Delete student");
         System.out.println("3. Add librarian");
-        System.out.println("4. Delete student");
+        System.out.println("4. Delete librarian");
         System.out.println("5. Add admins");
         System.out.println("6. Delete admins");
         System.out.println("7. Log out");
         System.out.print("Please input your choice: ");
         // make sure the user entered a valid option
-        Scanner myobj = new Scanner(System.in);
-        int input  = myobj.nextInt();
+        Scanner myobj2 = new Scanner(System.in);
+        int input  = myobj2.nextInt();
         while(input < 1 || input > 7 )
         {
             System.out.print("Please input a correct choice: ");
@@ -190,10 +234,12 @@ public class UI_Fuctions {
             // use add to put the object inside the arraylist
             Students stud = new Students(student_name, student_id, mobile, email, birthday);
             Students_objects.add(stud);
-            input = UI_admin_view();
-
             //for debugging
             //System.out.println(Students_objects.get(Students_objects.size()-1).toString());
+
+            input = UI_admin_view();
+
+
         } else if (input == 2) //=============================== delete student
         {
             // search for the item to delete
@@ -391,6 +437,7 @@ public class UI_Fuctions {
 
         return -1;
     }
-   
-    
+
 }
+
+
