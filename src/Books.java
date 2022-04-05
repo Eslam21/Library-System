@@ -9,8 +9,22 @@ public class Books{
     private int available_quantity;
     private int issued_quantitiy;
 
+
+
+    public Books() {}
+
+
+    public Books(String ID, String book_name, String author_name, int available_quantity, int issued_quantitiy) {
+        this.ID = ID;
+        this.book_name = book_name;
+        this.author_name = author_name;
+        this.available_quantity = available_quantity;
+        this.issued_quantitiy = issued_quantitiy;
+    }
+
+
 // setters and getters
-    public String getID() {
+    public String get_Book_ID() {
         return this.ID;
     }
 
@@ -65,7 +79,7 @@ public class Books{
     @Override
     public String toString() {
         return "{" +
-                " ID='" + getID() + "'" +
+                " ID='" + get_Book_ID() + "'" +
                 ", book_name='" + getBook_name() + "'" +
                 ", author_name='" + getAuthor_name() + "'" +
                 ", available_quantity='" + getAvailable_quantity() + "'" +

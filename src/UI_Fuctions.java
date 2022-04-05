@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -131,7 +134,7 @@ public class UI_Fuctions {
     static int UI_admin_view()
     {
         // user interface
-        System.out.println("=========Admins View");
+        System.out.println("=========Admins View=========");
         System.out.println("1. Add student");
         System.out.println("2. Delete student");
         System.out.println("3. Add librarian");
@@ -327,12 +330,239 @@ public class UI_Fuctions {
 
     }
 
-    static void librarian_view(FileM Admins_file, FileM Books_file, FileM Issued_books_file, FileM Librarians_file, FileM Students_file, ArrayList<Admins>Admins_objects,ArrayList<Books> Books_objects,ArrayList<Issued_Books> Issued_books_objects, ArrayList<Librarians> Librarians_objects,ArrayList<Students> Students_objects)
+    static int UI_Librarian_view()
     {
-        System.out.println(" Work in progress :) ");
+
+        System.out.println("========= Librarian View =========");
+        System.out.println("1. Add Books");
+        System.out.println("2. Delete Books");
+        System.out.println("3. Search Books by name");
+        System.out.println("4. Search Books by ID");
+        System.out.println("5. Issue Books");
+        System.out.println("6. Return Books");
+        System.out.println("7. View Books");
+        System.out.println("8. View Issued Books");
+        System.out.println("9. Log out");
+        System.out.print("Please input your choice: ");
+
+        Scanner myobj = new Scanner(System.in);
+        int input  = myobj.nextInt();
+        while(input < 1 || input > 9 )
+        {
+            System.out.print("Please input a correct choice: ");
+            Scanner myobj1 = new Scanner(System.in);
+            input  = myobj1.nextInt();
+        }
+        return input;
+
     }
 
+    static void librarian_view(FileM Admins_file, FileM Books_file, FileM Issued_books_file, FileM Librarians_file, FileM Students_file, ArrayList<Admins>Admins_objects,ArrayList<Books> Books_objects,ArrayList<Issued_Books> Issued_books_objects, ArrayList<Librarians> Librarians_objects,ArrayList<Students> Students_objects)
+    {
 
+
+
+        int input = UI_Librarian_view();
+        while (input != 9) {
+        
+
+
+        if (input == 1)//====================Add Book
+        {
+            // validate input
+            Scanner sc = new Scanner(System.in);
+
+            System.out.print("Book ID: ");
+            String book_id = sc.nextLine();
+            while (findingbooks_id(book_id, Books_objects) != -1) {
+                System.out.print("This id is already present...\n New ID: ");
+                book_id = sc.nextLine();
+            }
+            while (isInt(book_id)==false) {
+                System.out.print("ID should only contatin numbers...\n New ID: ");
+                book_id = sc.nextLine();
+            }
+
+            System.out.print("Book name: ");
+            String bookname = sc.nextLine();
+            while (checkAlphabetic(bookname) == false) {
+                System.out.print("Name must be only made of characters \n Book name: ");
+                bookname = sc.nextLine();
+            }
+
+           
+
+            System.out.print("Author Name: ");
+            String Authour_name = sc.nextLine();
+            while (checkAlphabetic(bookname) == false) {
+                System.out.print("Author Name must be only made of characters \n Author name: ");
+                bookname = sc.nextLine();
+            }
+
+            boolean type=true;
+            int Avilable_Quantity=0;
+            while (type) {
+
+                try {
+                    System.out.print("Avilable Quantity: ");
+                    Avilable_Quantity = sc.nextInt();
+                    
+                    type=false;
+                } catch (Exception e) {
+
+                    System.out.println("Error!\n");
+                    System.out.print("Avilable Quantity Should only contain numbers...\n New Quantity: ");
+                    Avilable_Quantity = sc.nextInt();
+                    
+                }
+                
+            }
+
+            boolean type2=true;
+            int Issued_Quantity=0;
+            while (type) {
+
+                try {
+                    System.out.print("Issued Quantity: ");
+                    Issued_Quantity = sc.nextInt();
+                    
+                    type2=false;
+                } catch (Exception e) {
+
+                    System.out.println("Error!\n");
+                    System.out.print("Issued Quantity Should only contain numbers...\n New Quantity: ");
+                    Issued_Quantity = sc.nextInt();
+                    
+                }
+                
+            }
+
+            // use add to put the object inside the arraylist
+            Books bk = new Books(book_id, bookname, Authour_name, Avilable_Quantity, Issued_Quantity);
+            
+            Books_objects.add(bk);
+            input = UI_Librarian_view();
+
+            //for debugging
+            //System.out.println(Students_objects.get(Students_objects.size()-1).toString());
+        }
+
+        else if(input==2)
+        {
+
+            Scanner sc = new Scanner(System.in);
+            System.out.print("Book ID: ");
+            String id = sc.nextLine();
+            int index = findingbooks_id(id, Books_objects);
+            if (index == -1) {
+                System.out.println("No such Book to delete...");
+                input = UI_Librarian_view();
+            } else {
+                Books_objects.remove(index);
+                input = UI_Librarian_view();
+            }
+        }    
+
+            else if(input==3)
+        {
+
+            Scanner sc = new Scanner(System.in);
+            System.out.print("Book Name: ");
+            String name = sc.nextLine();
+            int index = findingbooks_name(name, Books_objects);
+            if (index == -1) {
+                System.out.println("No such Book in data...");
+                input = UI_Librarian_view();
+            } else {
+
+                Books_objects.get(index).toString();
+                
+                input = UI_Librarian_view();
+            }
+
+        }    
+
+            else if(input==4)
+        {
+
+            Scanner sc = new Scanner(System.in);
+            System.out.print("Book ID: ");
+            String name = sc.nextLine();
+            int index = findingbooks_id(name, Books_objects);
+            if (index == -1) {
+                System.out.println("No such Book in data...");
+                input = UI_Librarian_view();
+            } else {
+                Students_objects.get(index).toString();
+                input = UI_Librarian_view();
+            }
+
+        }  
+        
+
+        else if(input==5)
+        {
+
+            System.out.println("issue books");
+            input = UI_Librarian_view();
+
+        } 
+        else if(input==6)
+        {
+
+            System.out.println("return books");
+            input = UI_Librarian_view();
+
+        } 
+        else if(input==7)
+        {
+
+            view_books(Books_objects);
+            input = UI_Librarian_view();
+
+        } 
+        else if(input==8)
+        {
+
+            view_issued_books(Issued_books_objects);
+            input = UI_Librarian_view();
+
+        } 
+        else if(input==9)
+        {
+
+            System.out.println("logout");
+
+
+        } 
+
+    
+
+        }
+    
+        
+    }
+
+    
+
+
+    static void view_books(ArrayList<Books> x)
+    {
+       
+        for(int i=0; i<x.size(); i++)
+        {
+            System.out.println(x.get(i).toString());
+        }
+        
+    }
+    
+    static void view_issued_books(ArrayList<Issued_Books> x)
+    {
+        for(int i=0; i<x.size(); i++)
+        {
+            System.out.println(x.get(i).toString());
+        }
+    }
     public static boolean checkAlphabetic(String input) {
         //used to check if a string is entirely characters
         for (int i = 0; i != input.length(); ++i) {
@@ -361,6 +591,32 @@ public class UI_Fuctions {
         for(int i=0; i<l.size(); i++)
         {
             if(ID.equals((l.get(i).getStudent_id())) == true)
+                return i;
+        }
+
+        return -1;
+    }
+
+    static int findingbooks_id(String ID, ArrayList<Books> l)
+    {
+        // function that loops the array of students to find the student with the same ID in input
+        // it will return its index and -1 if not found
+        for(int i=0; i<l.size(); i++)
+        {
+            if(ID.equals((l.get(i).get_Book_ID())) == true)
+                return i;
+        }
+
+        return -1;
+    }
+
+    static int findingbooks_name(String name, ArrayList<Books> l)
+    {
+        // function that loops the array of students to find the student with the same ID in input
+        // it will return its index and -1 if not found
+        for(int i=0; i<l.size(); i++)
+        {
+            if(name.equals((l.get(i).getBook_name())) == true)
                 return i;
         }
 
