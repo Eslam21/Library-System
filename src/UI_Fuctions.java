@@ -400,7 +400,6 @@ public class UI_Fuctions {
                 bookname = sc.nextLine();
             }
 
-           
 
             System.out.print("Author Name: ");
             String Authour_name = sc.nextLine();
@@ -515,13 +514,49 @@ public class UI_Fuctions {
         }  
         
 
+
         else if(input==5)
         {
 
-            System.out.println("issue books");
+            Scanner sc = new Scanner(System.in);
+            System.out.print("Input Student ID to Issue The Book: ");
+            String id = sc.nextLine();
+            String student_id = sc.nextLine();
+
+            while (isInt(student_id)==false) {
+                System.out.print("ID should only contatin numbers...\n Add valid ID: ");
+                student_id = sc.nextLine();
+            }
+
+            while (findingstudent(student_id, Students_objects) == -1) {
+                System.out.print("No Such Student in the Database\n Add valid ID: ");
+                student_id = sc.nextLine();
+            }
+
+
+            System.out.print("Input Book Name to Issue: ");
+            String book_name = sc.nextLine();
+            while (findingbooks_name(book_name, Books_objects) == -1) {
+                System.out.print("No Such Book in the Database\n Search another Book Name: ");
+                book_name = sc.nextLine();
+            }
+            
+            int index=findingbooks_name(book_name, Books_objects);
+            if (Books_objects.get(index).getAvailable_quantity()<=0){
+
+                System.out.println("No Books Avilable Currently :( ");
+                input = UI_Librarian_view();
+            }
+            else{
+
+            Books_objects.get(index).setAvailable_quantity(Books_objects.get(index).getAvailable_quantity()-1);
+            Books_objects.get(index).setIssued_quantitiy(Books_objects.get(index).getIssued_quantitiy()+1);
+
+            }
             input = UI_Librarian_view();
 
         } 
+
         else if(input==6)
         {
 
@@ -635,6 +670,7 @@ public class UI_Fuctions {
 
         return -1;
     }
+
 
     static ArrayList<Integer> finding_multible_books_name(String name, ArrayList<Books> l)
     {
