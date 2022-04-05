@@ -512,8 +512,6 @@ public class UI_Fuctions {
 
 
         }  
-        
-
 
         else if(input==5)
         {
@@ -531,7 +529,6 @@ public class UI_Fuctions {
                 System.out.print("No Such Student in the Database\n Add valid ID: ");
                 student_id = sc.nextLine();
             }
-            int index0= findingstudent(student_id, Students_objects);
 
             System.out.print("Input Book Name to Issue: ");
             String book_name = sc.nextLine();
@@ -553,7 +550,7 @@ public class UI_Fuctions {
 
             }
             String p_id = Integer.toString(Issued_books_objects.size()+1);
-            Issued_Books newly_issued = new Issued_Books(p_id,Books_objects.get(index).get_Book_ID(),Students_objects.get(index0).getStudent_id(),false );
+            Issued_Books newly_issued = new Issued_Books(p_id,Books_objects.get(index).get_Book_ID(),student_id,false );
             Issued_books_objects.add(newly_issued);
 
             input = UI_Librarian_view();
@@ -563,7 +560,41 @@ public class UI_Fuctions {
         else if(input==6)
         {
 
-            System.out.println("return books");
+
+            Scanner sc = new Scanner(System.in);
+            System.out.print("Input Student ID to Return The Book: ");
+            String student_id = sc.nextLine();
+
+            while (isInt(student_id)==false) {
+                System.out.print("ID should only contatin numbers...\n Add valid ID: ");
+                student_id = sc.nextLine();
+            }
+
+            System.out.print("Input Book Name to Return: ");
+            String book_name = sc.nextLine();
+          
+            while (findingbooks_name(book_name, Books_objects) == -1) {
+                System.out.print("No Such Book in the Database\n Search another Book Name: ");
+                book_name = sc.nextLine();
+            }
+
+
+            int index_book= findingbooks_name(book_name, Books_objects);
+            if(findingissued_data(student_id,Books_objects.get(index_book).get_Book_ID(), Issued_books_objects) == -1) {
+                System.out.print(" Sorry, No Such Student or Book in the Issued Database\n ");
+
+    
+            }
+
+            else{
+
+            int index=findingbooks_name(book_name, Books_objects);
+            Books_objects.get(index).setAvailable_quantity(Books_objects.get(index).getAvailable_quantity()+1);
+            Books_objects.get(index).setIssued_quantitiy(Books_objects.get(index).getIssued_quantitiy()-1);
+            int index_return=findingissued_data(student_id,Books_objects.get(index_book).get_Book_ID(), Issued_books_objects);
+            Issued_books_objects.get(index_return).setReturned(true);   
+            }
+
             input = UI_Librarian_view();
 
         } 
@@ -592,9 +623,6 @@ public class UI_Fuctions {
     
         
     }
-    
-
-    
 
 
     static void view_books(ArrayList<Books> x)
@@ -648,6 +676,19 @@ public class UI_Fuctions {
         return -1;
     }
 
+    static int findingissued_data(String ID,String book_id, ArrayList<Issued_Books>l)
+    {
+        // function that loops the array of students to find the student with the same ID in input
+        // it will return its index and -1 if not found
+        for(int i=0; i<l.size(); i++)
+        {
+            if(ID.equals((l.get(i).getStudent_id())) == true &&book_id.equals((l.get(i).getBook_id())) == true)
+                return i;
+        }
+
+        return -1;
+    }
+
     static int findingbooks_id(String ID, ArrayList<Books> l)
     {
         // function that loops the array of students to find the student with the same ID in input
@@ -673,7 +714,6 @@ public class UI_Fuctions {
 
         return -1;
     }
-
 
     static ArrayList<Integer> finding_multible_books_name(String name, ArrayList<Books> l)
     {
