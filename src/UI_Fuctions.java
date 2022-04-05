@@ -1,7 +1,5 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.nio.Buffer;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class UI_Fuctions {
@@ -128,7 +126,14 @@ public class UI_Fuctions {
 
             }
 
+          
+
+            
+
         }
+        
+
+    
 
     }
     static int UI_admin_view()
@@ -152,6 +157,7 @@ public class UI_Fuctions {
             Scanner myobj1 = new Scanner(System.in);
             input  = myobj1.nextInt();
         }
+        myobj.close();
         return input;
 
     }
@@ -211,6 +217,7 @@ public class UI_Fuctions {
                 Students_objects.remove(index);
                 input = UI_admin_view();
             }
+        
 
             // remove the object from the list
             /* debugging
@@ -243,6 +250,7 @@ public class UI_Fuctions {
             Librarian_objects.add(lib);
             input = UI_admin_view();
 
+
             //debugging
             /* debugging
             for(int i=0; i<Librarian_objects.size(); i++)
@@ -265,6 +273,8 @@ public class UI_Fuctions {
                 Librarian_objects.remove(index);
                 input = UI_admin_view();
             }
+
+
 
             // remove the object from the list
             /*
@@ -469,16 +479,19 @@ public class UI_Fuctions {
             Scanner sc = new Scanner(System.in);
             System.out.print("Book Name: ");
             String name = sc.nextLine();
-            int index = findingbooks_name(name, Books_objects);
-            if (index == -1) {
+            ArrayList<Integer> index = finding_multible_books_name(name, Books_objects);
+            if (index.size() == 0) {
                 System.out.println("No such Book in data...");
                 input = UI_Librarian_view();
             } else {
 
-                Books_objects.get(index).toString();
+                for(int i=0;i<index.size();i++)
+
+                System.out.println(Books_objects.get(index.get(i)).toString());
                 
                 input = UI_Librarian_view();
             }
+        
 
         }    
 
@@ -486,16 +499,18 @@ public class UI_Fuctions {
         {
 
             Scanner sc = new Scanner(System.in);
-            System.out.print("Book ID: ");
+            System.out.print("Enter Book ID: ");
             String name = sc.nextLine();
             int index = findingbooks_id(name, Books_objects);
+
             if (index == -1) {
                 System.out.println("No such Book in data...");
                 input = UI_Librarian_view();
             } else {
-                Students_objects.get(index).toString();
+               System.out.println(Books_objects.get(index).toString());
                 input = UI_Librarian_view();
             }
+
 
         }  
         
@@ -535,13 +550,11 @@ public class UI_Fuctions {
 
 
         } 
-
-    
-
         }
     
         
     }
+    
 
     
 
@@ -623,6 +636,17 @@ public class UI_Fuctions {
         return -1;
     }
 
+    static ArrayList<Integer> finding_multible_books_name(String name, ArrayList<Books> l)
+    {
+        ArrayList<Integer> finder= new ArrayList<Integer>();
+        for(int i=0; i<l.size(); i++)
+        {
+            if(name.equals((l.get(i).getBook_name())) == true)
+                finder.add(i);
+        }
+        return finder;
+    }
+
     static int findinglibrarian(String ID, ArrayList<Librarians> l)
     {
         //search for the librarian with the given IDm returns its index and -1 if not found
@@ -647,6 +671,7 @@ public class UI_Fuctions {
 
         return -1;
     }
+
    
     
 }

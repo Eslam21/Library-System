@@ -36,11 +36,15 @@ public class FileM{
                 number_rows++;
             }
 
+            csvReader.close();
+
         }
         catch (Exception e) {
             e.printStackTrace();
 
         }
+
+        
 
     }
 
