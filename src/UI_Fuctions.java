@@ -456,7 +456,7 @@ public class UI_Fuctions {
             //System.out.println(Students_objects.get(Students_objects.size()-1).toString());
         }
 
-        else if(input==2)
+        else if(input==2) //====
         {
 
             Scanner sc = new Scanner(System.in);
@@ -520,7 +520,6 @@ public class UI_Fuctions {
 
             Scanner sc = new Scanner(System.in);
             System.out.print("Input Student ID to Issue The Book: ");
-            String id = sc.nextLine();
             String student_id = sc.nextLine();
 
             while (isInt(student_id)==false) {
@@ -532,7 +531,7 @@ public class UI_Fuctions {
                 System.out.print("No Such Student in the Database\n Add valid ID: ");
                 student_id = sc.nextLine();
             }
-
+            int index0= findingstudent(student_id, Students_objects);
 
             System.out.print("Input Book Name to Issue: ");
             String book_name = sc.nextLine();
@@ -553,6 +552,10 @@ public class UI_Fuctions {
             Books_objects.get(index).setIssued_quantitiy(Books_objects.get(index).getIssued_quantitiy()+1);
 
             }
+            String p_id = Integer.toString(Issued_books_objects.size()+1);
+            Issued_Books newly_issued = new Issued_Books(p_id,Books_objects.get(index).get_Book_ID(),Students_objects.get(index0).getStudent_id(),false );
+            Issued_books_objects.add(newly_issued);
+
             input = UI_Librarian_view();
 
         } 

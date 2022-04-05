@@ -9,6 +9,13 @@ public class Issued_Books {
     private boolean returned;
 
 
+    public Issued_Books(){}
+    public Issued_Books(String procedure_iD, String book_id, String student_id, boolean returned) {
+        this.procedure_iD = procedure_iD;
+        Book_id = book_id;
+        this.student_id = student_id;
+        this.returned = returned;
+    }
 
     // setters and getters
     public String getProcedure_iD() {
