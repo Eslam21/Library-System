@@ -74,6 +74,32 @@ public class Books{
         setAvailable_quantity(x);
         setIssued_quantitiy(xx);
     }
+    public static ArrayList<String>  objects_to_string(ArrayList<Books> x)
+    {
+       /*
+        Static function as we don't want it to work with individual objects
+
+        1. takes the file headers into the array of string
+        2. extracts the private attributes from the objects one by one
+        3. adds them to the array of strings
+        => to be used in the FileM write as it takes an arraylist of strings
+        */
+        ArrayList<String> s = new ArrayList<>();
+        s.add("Book ID");
+        s.add("Book Name");
+        s.add("Author Name");
+        s.add("Available Quantity");
+        s.add("Issued Quantity");
+        for(int i=0; i<x.size(); i++)
+        {
+            s.add(x.get(i).get_Book_ID());
+            s.add(x.get(i).getBook_name());
+            s.add(x.get(i).getAuthor_name());
+            s.add(Integer.toString(x.get(i).getAvailable_quantity()));
+            s.add(Integer.toString(x.get(i).getIssued_quantitiy()));
+        }
+        return s;
+    }
 
 
     @Override

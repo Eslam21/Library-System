@@ -47,6 +47,29 @@ public class Admins {
         setAdmin_password(f.get(++start));
     }
 
+    public static ArrayList<String>  objects_to_string(ArrayList<Admins> x)
+    {
+        /*
+        Static function as we don't want it to work with individual objects
+
+        1. takes the file headers into the array of string
+        2. extracts the private attributes from the objects one by one
+        3. adds them to the array of strings
+        => to be used in the FileM write as it takes an arraylist of strings
+        */
+        ArrayList<String> s = new ArrayList<>();
+        s.add("Admin ID");
+        s.add("Admin Name");
+        s.add("Admin password");
+        for(int i=0; i<x.size(); i++)
+        {
+            s.add(x.get(i).getAdmin_id());
+            s.add(x.get(i).getAdmin_name());
+            s.add(x.get(i).getAdmin_password());
+        }
+        return s;
+    }
+
 
     @Override
     public String toString() {

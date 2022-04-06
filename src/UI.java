@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class UI {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args)  {
         /* Creating FileM objects for each file,
         those objects are used to read, write and hold the data in the csv file in a string array
          */
@@ -16,11 +16,11 @@ public class UI {
         UI_Fuctions.Reading_all_files(Admins_file, Books_file, Issued_books_file, Librarians_file, Students_file);
 
         // Creating arraylists of all our classes, to create an array of objects
-        ArrayList<Admins> Admins_objects = new ArrayList<Admins>();
-        ArrayList<Books> Books_objects = new ArrayList<Books>();
-        ArrayList<Issued_Books> Issued_books_objects = new ArrayList<Issued_Books>();
-        ArrayList<Librarians> Librarians_objects = new ArrayList<Librarians>();
-        ArrayList<Students> Students_objects = new ArrayList<Students>();
+        ArrayList<Admins> Admins_objects = new ArrayList<>();
+        ArrayList<Books> Books_objects = new ArrayList<>();
+        ArrayList<Issued_Books> Issued_books_objects = new ArrayList<>();
+        ArrayList<Librarians> Librarians_objects = new ArrayList<>();
+        ArrayList<Students> Students_objects = new ArrayList<>();
 
         // fill the objects, this function changes the array of strings, to  array of objects, this is to make it easier to edit and delete
         // afterwards we will be working on the array of objects
@@ -36,13 +36,19 @@ public class UI {
         if(which_interface == 1)
         {
             // this function contains the admin interface along with all the functions an admin can do
-            UI_Fuctions.Admin_view(Admins_file, Books_file, Issued_books_file, Librarians_file, Students_file, Admins_objects, Books_objects,Issued_books_objects,Librarians_objects,Students_objects );
+            UI_Fuctions.Admin_view( Admins_objects,Librarians_objects,Students_objects );
         }
         else
         {
             // this function contains the interface of the librarian and all the functions a librarian can do
-            UI_Fuctions.librarian_view(Admins_file, Books_file, Issued_books_file, Librarians_file, Students_file, Admins_objects, Books_objects,Issued_books_objects,Librarians_objects,Students_objects );
+            UI_Fuctions.librarian_view(Books_objects,Issued_books_objects,Students_objects);
         }
+
+
+        // Writing all the updates
+        UI_Fuctions.writing_to_files(Admins_file, Books_file, Issued_books_file, Librarians_file,Students_file, Admins_objects, Books_objects,Issued_books_objects,Librarians_objects,Students_objects );
+
+
     
     }
 

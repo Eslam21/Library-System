@@ -69,6 +69,33 @@ public class Students {
         setEmail(f.get(++start));
         setMobile(f.get(++start));
     }
+
+    public static ArrayList<String>  objects_to_string(ArrayList<Students> x)
+    {
+        /*
+        Static function as we don't want it to work with individual objects
+
+        1. takes the file headers into the array of string
+        2. extracts the private attributes from the objects one by one
+        3. adds them to the array of strings
+        => to be used in the FileM write as it takes an arraylist of strings
+        */
+        ArrayList<String> s = new ArrayList<>();
+        s.add("Student ID");
+        s.add("Student Name");
+        s.add("Student Birthday");
+        s.add("Email");
+        s.add("Mobile number");
+        for(int i=0; i<x.size(); i++)
+        {
+            s.add(x.get(i).getStudent_id());
+            s.add(x.get(i).getStudent_name());
+            s.add(x.get(i).getBirthday());
+            s.add(x.get(i).getEmail());
+            s.add(x.get(i).getMobile());
+        }
+        return s;
+    }
   
 
     @Override
